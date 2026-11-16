@@ -1,0 +1,66 @@
+{
+  "selected_rec_threads": 4,
+  "rule": "smallest within 2% of fastest valid end-to-end HTTP candidate",
+  "arms": [
+    {
+      "index": 0,
+      "slots": 0,
+      "pages_per_second": 0.2935253691085563,
+      "gates": {
+        "no_fd_growth": true,
+        "no_thread_growth": true,
+        "warm_rss_growth": true,
+        "memory_reserve": true,
+        "swap_growth": true
+      }
+    },
+    {
+      "index": 1,
+      "slots": 1,
+      "pages_per_second": 0.2872128872752652,
+      "gates": {
+        "no_fd_growth": true,
+        "no_thread_growth": true,
+        "warm_rss_growth": true,
+        "memory_reserve": true,
+        "swap_growth": true
+      }
+    },
+    {
+      "index": 2,
+      "slots": 2,
+      "pages_per_second": 0.34032459479838434,
+      "gates": {
+        "no_fd_growth": true,
+        "no_thread_growth": true,
+        "warm_rss_growth": true,
+        "memory_reserve": true,
+        "swap_growth": true
+      }
+    },
+    {
+      "index": 3,
+      "slots": 4,
+      "pages_per_second": 0.3489751962975637,
+      "gates": {
+        "no_fd_growth": true,
+        "no_thread_growth": true,
+        "warm_rss_growth": true,
+        "memory_reserve": true,
+        "swap_growth": true
+      }
+    },
+    {
+      "index": 4,
+      "slots": 0,
+      "pages_per_second": 0.31376355197793515,
+      "gates": {
+        "no_fd_growth": true,
+        "no_thread_growth": true,
+        "warm_rss_growth": true,
+        "memory_reserve": true,
+        "swap_growth": true
+      }
+    }
+  ]
+}

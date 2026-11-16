@@ -1,0 +1,30 @@
+[Unit]
+Description=AutoOCR full business on Xavier NX (TRT8.2, loopback only)
+After=local-fs.target network.target
+RequiresMountsFor=/home/xchq/work/autoocr
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=xchq
+Group=xchq
+WorkingDirectory=/home/xchq/work/autoocr
+Environment=HOME=/home/xchq
+ExecStart=/bin/bash /home/xchq/work/autoocr/releases/jetson-r1/edge_deploy/jetson/start_jetson.sh
+ExecStartPost=/home/xchq/work/autoocr/envs/business-py310/bin/python /home/xchq/work/autoocr/releases/jetson-r1/edge_deploy/jetson/health_jetson.py --timeout 300
+TimeoutStartSec=360
+TimeoutStopSec=90
+KillMode=mixed
+Restart=on-failure
+RestartSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryAccounting=true
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoocr-jetson
+
+[Install]
+WantedBy=multi-user.target

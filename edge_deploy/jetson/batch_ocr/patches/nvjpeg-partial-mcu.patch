@@ -1,0 +1,9 @@
+--- NvJpegDecoder.cpp
++++ NvJpegDecoderSafe.cpp
+@@ -218,4 +218,5 @@
+-    if ((cinfo.output_width % (cinfo.max_h_samp_factor * DCTSIZE))
++    if ((cinfo.output_height % (cinfo.max_v_samp_factor * DCTSIZE))
++            || (cinfo.output_width % (cinfo.max_h_samp_factor * DCTSIZE))
+             || cinfo.comp_info[0].h_samp_factor != 2
+             || cinfo.comp_info[1].h_samp_factor != 1
+             || cinfo.comp_info[2].h_samp_factor != 1

@@ -1,0 +1,38 @@
+# This unit targets the verified q1220 / Ubuntu-22.04 deployment.
+# Review all absolute paths and User/Group before installing on another host.
+[Unit]
+Description=AutoOCR full business service (CPU, loopback only)
+After=local-fs.target network.target
+RequiresMountsFor=/mnt/d/docuyyy/autoocr /home/q1220/projects/autoocr-business
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=exec
+User=q1220
+Group=q1220
+WorkingDirectory=/mnt/d/docuyyy/autoocr/edge_deploy/business
+Environment=HOME=/home/q1220
+Environment=AUTOOCR_SOURCE_ROOT=/mnt/d/docuyyy/autoocr
+Environment=AUTOOCR_RUNTIME_DIR=/home/q1220/projects/autoocr-business/runtime
+Environment=AUTOOCR_BUSINESS_VENV=/home/q1220/projects/autoocr-business/.venv
+Environment=PYTHONUNBUFFERED=1
+ExecStartPre=/home/q1220/projects/autoocr-business/.venv/bin/python /mnt/d/docuyyy/autoocr/edge_deploy/business/service_health.py --check-port
+ExecStart=/bin/bash /mnt/d/docuyyy/autoocr/edge_deploy/business/start.sh
+# TCP listen alone does not mean the worker has initialized all models.
+ExecStartPost=/home/q1220/projects/autoocr-business/.venv/bin/python /mnt/d/docuyyy/autoocr/edge_deploy/business/service_health.py --wait-ready --timeout 180
+TimeoutStartSec=240
+TimeoutStopSec=90
+KillMode=mixed
+Restart=on-failure
+RestartSec=10
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryAccounting=true
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoocr-business
+
+[Install]
+WantedBy=multi-user.target

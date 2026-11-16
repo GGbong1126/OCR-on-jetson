@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "platform": "L4T32.7.1_TRT8.2.1_CUDA10.2",
+  "engines": {
+    "det": {
+      "path": "pth/tensorrt/ocr_det_fp32_hw32_960_r1.engine",
+      "sha256": "bf79b526cb3d59c60b3fb4d680c0116bed59c051f85698b45d4f58f287e0a271",
+      "source_sha256": "b4413116303d0b3fcf6266dfb1ac5ce6b8e0b6f8955fbf9b9a2f08e402f810b2"
+    },
+    "rec": {
+      "path": "pth/tensorrt/ocr_rec_fp32_w32_1536_r1.engine",
+      "sha256": "da2ff03a315a410ccd1d795af129c4220905d45ea2732da0d4441c8ea914c6ff",
+      "source_sha256": "c93ea0ae08479f3b9a3d8b3549c7a45776f4830a10a430e3d355570d1daec5f4"
+    },
+    "enhance": {
+      "path": "pth/tensorrt/enhance_fp32_512_r1.engine",
+      "sha256": "dd33021e6b454c44f5bf015df3bfac84045b89fdbc8d101d0bad11d25625750c",
+      "source_sha256": "4310deb4cd00f99710a8a7bf4faf004394a344c5360b14ff6d4f81a391c1b4b3"
+    },
+    "yolo": {
+      "path": "pth/tensorrt/yolo_fp32_hw64_640_r2.engine",
+      "sha256": "74dc49d92e8d75eff5bb39422016b9e98512edb5eeb8e861b52c85ee2bcc04b1",
+      "source_sha256": "ab7e6f647d97f2cd50df37b81935cfb11a33597c9688420ec81c8cfcd20a60f1"
+    },
+    "ner": {
+      "path": "pth/tensorrt/ner_fp32_s2_512_r4.engine",
+      "sha256": "16f2ed4d6a372e3e915a7076c50dcd5bea99dd2cc4cbbe740b19856e26b1ea4d",
+      "source_sha256": "46cad18b29e97a6db75a061595a0c4f29ce3348c01b83da905eb30d0b2dda3b0"
+    },
+    "cell": {
+      "path": "pth/tensorrt/cell_fp32_r1.engine",
+      "sha256": "0fe6af5c9c228c003cfae920c2b477aa0aa50150563a0277d1bca423ab2e22c5",
+      "source_sha256": "303ea872532f9ba360868ee827bd47d281af15c8606252b78848938c759d1357",
+      "plugins": [
+        {
+          "path": "pth/tensorrt/libautoocr_grid.so",
+          "sha256": "e4c9181f9e9b870ea2b01e84a7518b01b98da66b7bc4a0c01799af745855f62b"
+        }
+      ]
+    },
+    "layout": {
+      "path": "pth/tensorrt/layout_fp32_r1.engine",
+      "sha256": "3bdcf5f6aa4382fd0da824708f3be79209a28ac461429fc206e237a70e8966e7",
+      "source_sha256": "45bf71750b00739a41fc209f132eb104a4d6b5bb29483c9078164d8b87cf28ba",
+      "plugins": [
+        {
+          "path": "pth/tensorrt/libautoocr_grid.so",
+          "sha256": "e4c9181f9e9b870ea2b01e84a7518b01b98da66b7bc4a0c01799af745855f62b"
+        }
+      ]
+    }
+  },
+  "cpu_modules": {},
+  "runtime_libraries": [
+    {
+      "path": "/usr/lib/aarch64-linux-gnu/libnvinfer.so.8.2.1",
+      "sha256": "47011b53040a5d9c1a21852ed4a07aadaaa61d7eb96f0e607c94eed28c9656e5"
+    },
+    {
+      "path": "/usr/lib/aarch64-linux-gnu/libnvinfer_plugin.so.8.2.1",
+      "sha256": "4f893d15bedd67e40e17d1f71786759f5a3e2ab828272f381507e71474877920"
+    },
+    {
+      "path": "/home/xchq/work/autoocr/lib/cuda10.2/libcublas.so",
+      "sha256": "39643ae2925d6cc5066a3cbd05640dd8cdf24f0746113b4c0dab6db6a998883b"
+    },
+    {
+      "path": "/home/xchq/work/autoocr/lib/cuda10.2/libcublasLt.so",
+      "sha256": "9bbf09384e85af1c62ba2cf222acad48359073c23be9f38a63dd59ec2810d40c"
+    }
+  ],
+  "adapter_sha256": {
+    "trt82_backend.py": "259c49a140006f8fccc93a94632e0f5abbc30883e53760e90f688eb4a7f86925",
+    "jetson_models.py": "1f8cff5c7fc850fea75e45583c6fcb0baa6d320f8c386424ae92339086989b70",
+    "serve_jetson.py": "5857f4cf88db30198db8db8670b5878c056ea5d865cd78b007062b1362024d3d",
+    "start_jetson.sh": "07ecd01dbcdadd30f8e9bbc273e04efbc106df0ffab15a48860be92c80121b3a",
+    "health_jetson.py": "17179a2c351e3fd76553ec8830d13a0def26e7e7d082023dfb0186df82a278dc",
+    "autoocr-jetson.service": "2aeeae9bb37a662a9bde416fb22cb7c0aa72a99771c8db04bfd601d5a0e78bff"
+  },
+  "status": "seven_gpu_models_staged_not_activated_or_http_accepted",
+  "regression_reports": {
+    "reports/compare_layout_cell_business_r1.json": "076d63e5f88a97de849b38577d74f740467a73789d9240e1088e5794df28cae0"
+  }
+}

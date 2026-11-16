@@ -1,0 +1,39 @@
+# Reviewed local q1220 deployment. OCR det/rec TRT, other models CPU.
+[Unit]
+Description=AutoOCR full business service (TensorRT OCR, loopback only)
+After=local-fs.target network.target
+RequiresMountsFor=/home/q1220/projects/autoocr-business /home/q1220/sdk/TensorRT-10.7.0.23
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=exec
+User=q1220
+Group=q1220
+WorkingDirectory=/home/q1220/projects/autoocr-business/releases/autoocr-business-trt-20260918-r1/edge_deploy/business
+Environment=HOME=/home/q1220
+Environment=AUTOOCR_SOURCE_ROOT=/home/q1220/projects/autoocr-business/releases/autoocr-business-trt-20260918-r1
+Environment=AUTOOCR_RUNTIME_DIR=/home/q1220/projects/autoocr-business/runtime
+Environment=AUTOOCR_BUSINESS_VENV=/home/q1220/projects/autoocr-business/.venv
+Environment=AUTOOCR_OCR_BACKEND=trt_fp32
+Environment=LD_LIBRARY_PATH=/home/q1220/sdk/TensorRT-10.7.0.23/lib:/usr/local/cuda-12.6/lib64
+Environment=PYTHONUNBUFFERED=1
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStartPre=/home/q1220/projects/autoocr-business/.venv/bin/python /home/q1220/projects/autoocr-business/releases/autoocr-business-trt-20260918-r1/edge_deploy/business/release_business.py verify --root /home/q1220/projects/autoocr-business/releases/autoocr-business-trt-20260918-r1
+ExecStart=/bin/bash /home/q1220/projects/autoocr-business/releases/autoocr-business-trt-20260918-r1/edge_deploy/business/start_release.sh
+ExecStartPost=/home/q1220/projects/autoocr-business/.venv/bin/python /home/q1220/projects/autoocr-business/releases/autoocr-business-trt-20260918-r1/edge_deploy/business/service_health.py --wait-ready --timeout 180 --backend tensorrt_fp32_with_ort_fallback
+TimeoutStartSec=240
+TimeoutStopSec=90
+KillMode=mixed
+Restart=on-failure
+RestartSec=10
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryAccounting=true
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoocr-business
+
+[Install]
+WantedBy=multi-user.target

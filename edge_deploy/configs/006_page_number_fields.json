@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "image_sha256": "fbdfdc71f723a0072fee4db420fabb4fb0d884674bfeb018dfeba08451c2e4bf",
+  "source_report_sha256": "ee61617f6b3e4a2d014d6c1f574ae3f379277086153b6028d271e1927a05ff2e",
+  "source_branch": "reference",
+  "crop_set_sha256": "c85f3b093bef55edb71d9afa41c220d6af07314ca3bd3b6f6a952feb6ea2a5bd",
+  "fields": [
+    {
+      "index": 55,
+      "role": "page_number",
+      "box": [[910, 1444], [910, 1414], [996, 1414], [996, 1444]],
+      "input_shape": [1, 3, 48, 138]
+    }
+  ]
+}

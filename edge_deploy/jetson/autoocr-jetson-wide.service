@@ -1,0 +1,32 @@
+[Unit]
+Description=AutoOCR optional wide FP32 service (requires existing Jetson license)
+After=local-fs.target network.target
+RequiresMountsFor=/home/xchq/work/autoocr
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=xchq
+Group=xchq
+WorkingDirectory=/home/xchq/work/autoocr
+Environment=HOME=/home/xchq
+Environment=AUTOOCR_REC_WIDE_MODE=on
+ExecStart=/bin/bash /home/xchq/work/autoocr/overlays/rec-wide-service-e127-r1/start_rec_wide.sh --serve
+ExecStartPost=/home/xchq/work/autoocr/envs/business-py310/bin/python /home/xchq/work/autoocr/overlays/rec-wide-service-e127-r1/health_rec_wide.py --mode on --timeout 300
+TimeoutStartSec=360
+TimeoutStopSec=90
+KillMode=mixed
+Restart=on-failure
+RestartPreventExitStatus=78
+RestartSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryAccounting=true
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoocr-jetson-wide
+
+[Install]
+WantedBy=multi-user.target

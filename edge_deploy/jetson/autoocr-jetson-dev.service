@@ -1,0 +1,32 @@
+[Unit]
+Description=AutoOCR Jetson development (no hardware license or usage limit)
+After=local-fs.target network.target
+RequiresMountsFor=/home/xchq/work/autoocr
+StartLimitIntervalSec=1800
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=xchq
+Group=xchq
+WorkingDirectory=/home/xchq/work/autoocr
+Environment=HOME=/home/xchq
+Environment=AUTOOCR_ENABLE_DEV_NO_AUTH=1
+ExecStart=/bin/bash /home/xchq/work/autoocr/overlays/jetson-dev-e129-r1/start_jetson_dev.sh --serve
+ExecStartPost=/home/xchq/work/autoocr/envs/business-py310/bin/python /home/xchq/work/autoocr/overlays/jetson-dev-e129-r1/health_jetson_dev.py --timeout 300
+TimeoutStartSec=360
+TimeoutStopSec=90
+KillMode=mixed
+Restart=on-failure
+RestartPreventExitStatus=78
+RestartSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+MemoryAccounting=true
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=autoocr-jetson-dev
+
+[Install]
+WantedBy=multi-user.target
